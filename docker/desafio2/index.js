@@ -9,7 +9,7 @@ const config = {
 };
 const cors = require('cors')
 const mysql = require('mysql');
-const connection = mysql.createConnection(config);
+let connection = mysql.createConnection(config);
 const createTable = `
     create table IF NOT EXISTS people(id int not null auto_increment primary key, name varchar(255))
 `;
@@ -19,16 +19,24 @@ connection.end();
 app.use(cors());
 
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    connection = mysql.createConnection(config);
     const sql = `INSERT INTO people(name) VALUES('Cristiano')`;
     connection.query(sql);
+
+    let namesSaved = "";
     
     
-    const peoplesSaved = connection.query("SELECT * FROM people");
-    console.log(peoplesSaved);
+    await connection.query(`SELECT * FROM people`, async function(err, result, fields){
+        if(err) throw err;
+
+        namesSaved = await result.map(e => e.name).join(", ");
+        console.log(namesSaved);
+        
+        res.send('<h1>Full Cycle</h1><br><br><br><br>'+namesSaved);
+    });
     
     connection.end();
-    res.send('<b>Full Cycle</b>');
 });
 
 app.listen(port, () => {
