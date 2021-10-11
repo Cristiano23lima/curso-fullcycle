@@ -2,7 +2,7 @@ version: "3"
 
 services:
   nginx:
-    image: cristiano23lima/nginx-node:prod
+    image: cristiano23lima/nginx-node:latest
     container_name: nginx
     tty: true
     ports:
@@ -19,8 +19,6 @@ services:
     depends_on:
       - mysql
     tty: true
-    volumes:
-      - ./:/usr/src/app
     ports:
       - "3000:3000"
     entrypoint: dockerize -wait tcp://db:3306 -timeout 60s docker-entrypoint.sh

@@ -2,7 +2,8 @@ FROM node:latest
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package.json .
+COPY index.js .
 
 RUN apt-get update && apt-get install -y wget
 
