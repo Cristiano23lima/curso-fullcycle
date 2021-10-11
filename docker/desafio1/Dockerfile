@@ -1,6 +1,3 @@
-FROM hello-world
-MAINTAINER "Cristiano Rodrigues"
-
+FROM hello-world as hello
 COPY ./codeeducation /
-
-ENTRYPOINT [ "/codeeducation" ]
+CMD [ "/codeeducation" ]
