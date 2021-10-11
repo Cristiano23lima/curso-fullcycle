@@ -2,8 +2,6 @@ version: "3"
 
 services:
   nginx:
-    # build:
-    #   context: ./nginx
     image: cristiano23lima/nginx-node:prod
     container_name: nginx
     tty: true
@@ -16,8 +14,6 @@ services:
     entrypoint: dockerize -wait tcp://app:3000 -timeout 120s bash -c "./docker-entrypoint.sh && nginx -g 'daemon off;'"
 
   app:
-    # build:
-    #   context: ./
     image: cristiano23lima/node
     container_name: app
     depends_on:
